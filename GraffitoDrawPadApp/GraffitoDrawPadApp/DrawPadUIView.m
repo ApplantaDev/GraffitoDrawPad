@@ -130,14 +130,31 @@
     [self setupDrawPad];
 }
 #pragma mark - View Draw Reading
-- (UIImage *)imageRepresentation
+- (UIImage *)imageRepresentation: (UIImageView*) backgroundImage
 {
     UIGraphicsBeginImageContext(self.bounds.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
+    if (backgroundImage != nil) {
+        [backgroundImage.layer renderInContext:context];
+    }
     [self.layer renderInContext:context];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return viewImage;
+//    
+//    
+//    CGRect rect = [self bounds];
+//    UIGraphicsBeginImageContextWithOptions(rect.size,YES,0.0f);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    if (backgroundImage != nil) {
+//       [backgroundImage.layer renderInContext:context];
+//    }
+//    [self.layer renderInContext:context];
+//    UIImage *capturedImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    return capturedImage;
+    
 }
 
 - (UIBezierPath *)bezierPathRepresentation

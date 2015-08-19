@@ -37,7 +37,7 @@ typedef enum : NSUInteger
 - (void) undoDrawing;
 - (void) redoDrawing;
 - (UIBezierPath *) bezierPathRepresentation;
-- (UIImage *) imageRepresentation;
+- (UIImage *)imageRepresentation: (UIImageView*) backgroundImage;
 
 @end
 

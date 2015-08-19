@@ -9,13 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "DrawPadUIView.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "RWDropdownMenu.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface DrawPadViewController : UIViewController <UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate>
+@interface DrawPadViewController : UIViewController <UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet DrawPadUIView *drawerView;
 @property (strong, nonatomic) IBOutlet UIImageView *canvasImageView;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navbar;
 @property (strong, nonatomic) UIColor *paintBrushColor;
+@property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 
 @end
