@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		9CF9792A1B82ADB5005D87A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF979291B82ADB5005D87A7 /* main.m */; };
 		9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9792C1B82ADB5005D87A7 /* AppDelegate.m */; };
-		9CF979301B82ADB5005D87A7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9792F1B82ADB5005D87A7 /* ViewController.m */; };
 		9CF979331B82ADB5005D87A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF979311B82ADB5005D87A7 /* Main.storyboard */; };
 		9CF979351B82ADB5005D87A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF979341B82ADB5005D87A7 /* Images.xcassets */; };
 		9CF979381B82ADB5005D87A7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CF979361B82ADB5005D87A7 /* LaunchScreen.xib */; };
 		9CF979441B82ADB5005D87A7 /* GraffitoDrawPadAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF979431B82ADB5005D87A7 /* GraffitoDrawPadAppTests.m */; };
+		9CF9794F1B82B077005D87A7 /* DrawPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9794E1B82B077005D87A7 /* DrawPadViewController.m */; };
+		9CF979521B82BAD5005D87A7 /* DrawPadUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF979511B82BAD5005D87A7 /* DrawPadUIView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +33,16 @@
 		9CF979291B82ADB5005D87A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9CF9792B1B82ADB5005D87A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9CF9792C1B82ADB5005D87A7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9CF9792E1B82ADB5005D87A7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9CF9792F1B82ADB5005D87A7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9CF979321B82ADB5005D87A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CF979341B82ADB5005D87A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9CF979371B82ADB5005D87A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9CF9793D1B82ADB5005D87A7 /* GraffitoDrawPadAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraffitoDrawPadAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF979421B82ADB5005D87A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF979431B82ADB5005D87A7 /* GraffitoDrawPadAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraffitoDrawPadAppTests.m; sourceTree = "<group>"; };
+		9CF9794D1B82B077005D87A7 /* DrawPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPadViewController.h; sourceTree = "<group>"; };
+		9CF9794E1B82B077005D87A7 /* DrawPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPadViewController.m; sourceTree = "<group>"; };
+		9CF979501B82BAD5005D87A7 /* DrawPadUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPadUIView.h; sourceTree = "<group>"; };
+		9CF979511B82BAD5005D87A7 /* DrawPadUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPadUIView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +86,10 @@
 			children = (
 				9CF9792B1B82ADB5005D87A7 /* AppDelegate.h */,
 				9CF9792C1B82ADB5005D87A7 /* AppDelegate.m */,
-				9CF9792E1B82ADB5005D87A7 /* ViewController.h */,
-				9CF9792F1B82ADB5005D87A7 /* ViewController.m */,
+				9CF9794D1B82B077005D87A7 /* DrawPadViewController.h */,
+				9CF9794E1B82B077005D87A7 /* DrawPadViewController.m */,
+				9CF979501B82BAD5005D87A7 /* DrawPadUIView.h */,
+				9CF979511B82BAD5005D87A7 /* DrawPadUIView.m */,
 				9CF979311B82ADB5005D87A7 /* Main.storyboard */,
 				9CF979341B82ADB5005D87A7 /* Images.xcassets */,
 				9CF979361B82ADB5005D87A7 /* LaunchScreen.xib */,
@@ -220,8 +225,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF979301B82ADB5005D87A7 /* ViewController.m in Sources */,
+				9CF9794F1B82B077005D87A7 /* DrawPadViewController.m in Sources */,
 				9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */,
+				9CF979521B82BAD5005D87A7 /* DrawPadUIView.m in Sources */,
 				9CF9792A1B82ADB5005D87A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

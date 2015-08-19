@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>2E0311BB-05F8-4449-A600-7910197C017A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>GraffitoDrawPadApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>8F861CA10EF187EDE2DDEC457F9970ED1D052728</key>
 		<string>https://github.com/Touchcore/GraffitoDrawPad.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>GraffitoDrawPadApp/GraffitoDrawPadApp.xcodeproj/project.xcworkspace</string>
+	<string>GraffitoDrawPadApp/GraffitoDrawPadApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>8F861CA10EF187EDE2DDEC457F9970ED1D052728</key>
