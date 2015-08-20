@@ -37,6 +37,7 @@
 - (void)setupDrawPad
 {
     paths = [NSMutableArray new];
+    redoPaths =  [NSMutableArray new];
     _canEdit = YES;
 }
 
@@ -102,13 +103,21 @@
 
 - (void) undoDrawing
 {
+    if([paths count] > 0){
+         [redoPaths addObject:[paths lastObject]];
+    }
     [paths removeLastObject];
+    
     [self setNeedsDisplay];
 }
 
 - (void) redoDrawing
 {
-
+    if ([redoPaths count] > 0) {
+        [paths addObject: [redoPaths lastObject]];
+    }
+    [redoPaths removeLastObject];
+    [self setNeedsDisplay];
 }
 
 - (void)setMode:(DrawPadMode)mode{
@@ -126,6 +135,7 @@
 {
     bezPath = nil;
     paths = nil;
+    redoPaths = nil;
     [self setNeedsDisplay];
     [self setupDrawPad];
 }
@@ -141,20 +151,6 @@
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return viewImage;
-//    
-//    
-//    CGRect rect = [self bounds];
-//    UIGraphicsBeginImageContextWithOptions(rect.size,YES,0.0f);
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    if (backgroundImage != nil) {
-//       [backgroundImage.layer renderInContext:context];
-//    }
-//    [self.layer renderInContext:context];
-//    UIImage *capturedImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    
-//    return capturedImage;
-    
 }
 
 - (UIBezierPath *)bezierPathRepresentation

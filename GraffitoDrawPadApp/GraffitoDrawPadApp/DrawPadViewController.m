@@ -40,7 +40,10 @@
     self.navbar.topItem.leftBarButtonItem = cameraButton;
     
     UIBarButtonItem *shareButton = [self createImageButtonItemWithNoTitle:@"ShareIcon" target:self action:@selector(presentMenuFromNav:)];
-    self.navbar.topItem.rightBarButtonItem = shareButton;
+    
+    UIBarButtonItem *playButton = [self createImageButtonItemWithNoTitle:@"PlayIcon" target:self action:@selector(playButtonPressed)];
+    
+    self.navbar.topItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton,playButton, nil] ;
 }
 
 -(void) setupBottomToolBar
@@ -160,9 +163,14 @@
 
 }
 
+-(void) playButtonPressed
+{
+     [drawerView animatePath];
+}
+
 -(void) brushButtonPressed
 {
-
+    [self performSegueWithIdentifier:@"showBrushMenu" sender:self];
 }
 
 -(void) trashButtonPressed

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C181D901B855A0200713A11 /* BrushMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C181D8F1B855A0200713A11 /* BrushMenuViewController.m */; };
 		9CF9792A1B82ADB5005D87A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF979291B82ADB5005D87A7 /* main.m */; };
 		9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9792C1B82ADB5005D87A7 /* AppDelegate.m */; };
 		9CF979331B82ADB5005D87A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF979311B82ADB5005D87A7 /* Main.storyboard */; };
@@ -31,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C181D8E1B855A0200713A11 /* BrushMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrushMenuViewController.h; sourceTree = "<group>"; };
+		9C181D8F1B855A0200713A11 /* BrushMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrushMenuViewController.m; sourceTree = "<group>"; };
 		9CF979241B82ADB5005D87A7 /* GraffitoDrawPadApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraffitoDrawPadApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF979281B82ADB5005D87A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF979291B82ADB5005D87A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 				9CF9794E1B82B077005D87A7 /* DrawPadViewController.m */,
 				9CF979501B82BAD5005D87A7 /* DrawPadUIView.h */,
 				9CF979511B82BAD5005D87A7 /* DrawPadUIView.m */,
+				9C181D8E1B855A0200713A11 /* BrushMenuViewController.h */,
+				9C181D8F1B855A0200713A11 /* BrushMenuViewController.m */,
 				9CF979311B82ADB5005D87A7 /* Main.storyboard */,
 				9CF979341B82ADB5005D87A7 /* Images.xcassets */,
 				9CF979361B82ADB5005D87A7 /* LaunchScreen.xib */,
@@ -252,6 +257,7 @@
 				9CF9795A1B842519005D87A7 /* RWDropdownMenu.m in Sources */,
 				9CF9795C1B842519005D87A7 /* RWDropdownMenuTransitionController.m in Sources */,
 				9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */,
+				9C181D901B855A0200713A11 /* BrushMenuViewController.m in Sources */,
 				9CF979521B82BAD5005D87A7 /* DrawPadUIView.m in Sources */,
 				9CF9795B1B842519005D87A7 /* RWDropdownMenuCell.m in Sources */,
 				9CF9792A1B82ADB5005D87A7 /* main.m in Sources */,

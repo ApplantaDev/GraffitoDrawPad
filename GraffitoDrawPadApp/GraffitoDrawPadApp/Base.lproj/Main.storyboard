@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Draw Pad View Controller-->
@@ -60,11 +61,81 @@
                         <outlet property="drawerView" destination="RiR-2E-PWI" id="7sC-Hh-JA5"/>
                         <outlet property="navbar" destination="sDh-d5-siD" id="XOx-pt-yqh"/>
                         <outlet property="toolbar" destination="Krv-kJ-32b" id="Hdl-Fh-1Bm"/>
+                        <segue destination="ePN-Sq-AbS" kind="presentation" identifier="showBrushMenu" id="KIJ-A8-HeC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="468" y="272"/>
+        </scene>
+        <!--Brush Menu View Controller-->
+        <scene sceneID="IWd-0l-I8L">
+            <objects>
+                <viewController id="ePN-Sq-AbS" customClass="BrushMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cvp-Lq-SFZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="UWo-18-2C1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FpL-xf-6GW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9m0-Yc-Ury">
+                                <rect key="frame" x="0.0" y="-8" width="600" height="44"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Brush Menu" id="ETL-bT-l7k"/>
+                                </items>
+                            </navigationBar>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-rn-xg7">
+                                <rect key="frame" x="15" y="166" width="570" height="31"/>
+                                <color key="minimumTrackTintColor" red="0.78823529410000004" green="0.18823529410000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jLU-jg-8Zb">
+                                <rect key="frame" x="15" y="269" width="570" height="31"/>
+                                <color key="minimumTrackTintColor" red="0.12690172699999988" green="0.6189536772973685" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2VN-EW-9VT">
+                                <rect key="frame" x="15" y="372" width="570" height="31"/>
+                            </slider>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oci-M5-BUd">
+                                <rect key="frame" x="253" y="551" width="94" height="29"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </stepper>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uwq-jm-RIJ">
+                                <rect key="frame" x="275" y="466" width="50" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jLU-jg-8Zb" firstAttribute="trailing" secondItem="lIF-rn-xg7" secondAttribute="trailing" id="5Os-yA-lmP"/>
+                            <constraint firstItem="2VN-EW-9VT" firstAttribute="leading" secondItem="jLU-jg-8Zb" secondAttribute="leading" id="8nk-Mm-JHj"/>
+                            <constraint firstItem="2VN-EW-9VT" firstAttribute="top" secondItem="jLU-jg-8Zb" secondAttribute="bottom" constant="73" id="Ayi-vM-rKM"/>
+                            <constraint firstItem="lIF-rn-xg7" firstAttribute="leading" secondItem="FpL-xf-6GW" secondAttribute="leadingMargin" constant="1" id="Dkz-xm-mW1"/>
+                            <constraint firstItem="jLU-jg-8Zb" firstAttribute="leading" secondItem="lIF-rn-xg7" secondAttribute="leading" id="HZV-xl-Gag"/>
+                            <constraint firstItem="oci-M5-BUd" firstAttribute="centerX" secondItem="2VN-EW-9VT" secondAttribute="centerX" id="Iay-Ij-i8w"/>
+                            <constraint firstItem="2VN-EW-9VT" firstAttribute="trailing" secondItem="jLU-jg-8Zb" secondAttribute="trailing" id="LYS-oV-T0z"/>
+                            <constraint firstItem="jLU-jg-8Zb" firstAttribute="top" secondItem="lIF-rn-xg7" secondAttribute="bottom" constant="73" id="PbH-9w-jlS"/>
+                            <constraint firstItem="UWo-18-2C1" firstAttribute="top" secondItem="lIF-rn-xg7" secondAttribute="bottom" constant="404" id="YGc-iM-UEz"/>
+                            <constraint firstItem="lIF-rn-xg7" firstAttribute="centerX" secondItem="9m0-Yc-Ury" secondAttribute="centerX" id="ZPt-fY-cmo"/>
+                            <constraint firstAttribute="bottom" secondItem="oci-M5-BUd" secondAttribute="bottom" constant="20" symbolic="YES" id="Zue-Oe-QNj"/>
+                            <constraint firstItem="9m0-Yc-Ury" firstAttribute="leading" secondItem="FpL-xf-6GW" secondAttribute="leadingMargin" constant="-16" id="o5J-j4-VMf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9m0-Yc-Ury" secondAttribute="trailing" constant="-16" id="sOB-2j-j5U"/>
+                            <constraint firstAttribute="centerX" secondItem="9m0-Yc-Ury" secondAttribute="centerX" id="y5L-A7-ctR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="AWf-Ni-D6c"/>
+                    <connections>
+                        <outlet property="navBar" destination="9m0-Yc-Ury" id="tLd-Ud-pY4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zik-QD-B91" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1290" y="272"/>
         </scene>
     </scenes>
 </document>

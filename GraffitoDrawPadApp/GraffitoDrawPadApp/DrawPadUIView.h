@@ -17,6 +17,7 @@ typedef enum : NSUInteger
 @interface DrawPadUIView : UIView
 {
     NSMutableArray *paths;
+    NSMutableArray *redoPaths;
     UIBezierPath *bezPath;
     CAShapeLayer *animateLayer;
     BOOL isAnimating;
