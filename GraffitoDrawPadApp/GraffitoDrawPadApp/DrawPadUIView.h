@@ -12,14 +12,7 @@
 
 typedef enum {
     ACEDrawingToolTypePen,
-    ACEDrawingToolTypeLine,
-    ACEDrawingToolTypeRectagleStroke,
-    ACEDrawingToolTypeRectagleFill,
-    ACEDrawingToolTypeEllipseStroke,
-    ACEDrawingToolTypeEllipseFill,
-    ACEDrawingToolTypeEraser,
-    ACEDrawingToolTypeText,
-    ACEDrawingToolTypeMultilineText
+    ACEDrawingToolTypeEraser
 } ACEDrawingToolType;
 
 typedef NS_ENUM(NSUInteger, ACEDrawingMode) {

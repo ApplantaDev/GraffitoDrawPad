@@ -25,6 +25,7 @@
     
 }
 
+//Configures the color sliders to the current selection when the view first loads
 -(void) setupColorSliders
 {
     const CGFloat *_components = CGColorGetComponents(self.currentSelectedColor.CGColor);
@@ -70,6 +71,7 @@
     _sliders = @[_redSlider, _greenSlider, _blueSlider];
 }
 
+//Adjusts the brush size to the current selection when the view first loads
 -(void) refreshBrushSize
 {
     self.brushSizeSlider.value = self.currentSelectedBrushSize;
@@ -78,7 +80,7 @@
     [self.brushSizeLabel setFont: [self.brushSizeLabel.font fontWithSize: (y+15)]];
 }
 
-
+//Changes the selected color based on a preset color being prerssed
 - (IBAction)colorButtonPressed:(id)sender {
     
     switch ([sender tag]) {
@@ -144,6 +146,7 @@
     [self setResultColor];
 }
 
+//Updates the brush size width and increases the font based on the value
 - (IBAction)brushSizeSliderChanged:(id)sender
 {
     UISlider *slider = sender;
@@ -174,6 +177,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Configures the navigation bar for the view
 -(void) setupTopNavBar
 {
     UIBarButtonItem *cancelButton = [self createImageButtonItemWithNoTitle:@"CancelIcon" target:self action:@selector(cancelButtonPressed)];
@@ -209,6 +213,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+//Saves the brush size and color data to the user defaults
 -(void) doneButtonPressed
 {
     UIColor *color = self.colorImageView.backgroundColor;

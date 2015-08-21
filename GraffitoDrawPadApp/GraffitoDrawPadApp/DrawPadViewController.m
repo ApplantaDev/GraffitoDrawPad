@@ -40,7 +40,7 @@
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"userColor"];
     if (colorData == nil)
     {
-        drawerView.lineColor = [UIColor blueColor];
+        drawerView.lineColor = [UIColor orangeColor];
     }
     else
     {
@@ -177,7 +177,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-// Items for Share Menu
+//Initializes items for Share Menu
 - (NSArray *)menuItems
 {
     if (!_menuItems)
@@ -206,6 +206,7 @@
     [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentLeft style:RWDropdownMenuStyleWhite navBarImage:[sender image] completion:nil];
 }
 
+//Fetches the images from the Canvas then saves it to the camera roll
 -(void) saveToPhotoAlbum
 {
     UIImage *image = [self getImageFromCanvas];
@@ -235,7 +236,7 @@
     return drawingImage;
 }
 
-
+//Enables the eraser
 -(void) eraseButtonPressed
 {
     drawerView.drawTool = ACEDrawingToolTypeEraser;
@@ -264,6 +265,7 @@
     [self performSegueWithIdentifier:@"showBrushMenu" sender:self];
 }
 
+//Enable the brush tool or show the brush menu if the brush tool is already enabled
 -(void) brushButtonPressed
 {
     if (drawerView.drawTool == ACEDrawingToolTypeEraser)
@@ -296,6 +298,7 @@
 
 #pragma mark - EmailComposerDelegate methods
 
+//Opens the email composer with a nice pre-defined message
 -(void) sendToEmail
 {
     UIImage *image = [self getImageFromCanvas];
@@ -319,6 +322,7 @@
 
 #pragma mark - MessageComposerDelegate methods
 
+//Opens the iOS message composer
 -(void) sendToMessage
 {
     UIImage *image = [self getImageFromCanvas];
@@ -393,6 +397,8 @@
     
     self.canvasImageView.image = image;
     
+    //Need to resize image view based on the size of the image imported
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -403,6 +409,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    //Send the current brush size and color data to the brush menu view controller
     BrushMenuViewController* vc = [segue destinationViewController];
     vc.currentSelectedColor = drawerView.lineColor;
     vc.currentSelectedBrushSize = drawerView.lineWidth;
