@@ -43,7 +43,7 @@
 		9C181D951B85835500713A11 /* ASValueTrackingSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValueTrackingSlider.m; sourceTree = "<group>"; };
 		9C181D9B1B86A82100713A11 /* GraffitoGadgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraffitoGadgets.h; sourceTree = "<group>"; };
 		9C181D9C1B86A82100713A11 /* GraffitoGadgets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraffitoGadgets.m; sourceTree = "<group>"; };
-		9CF979241B82ADB5005D87A7 /* Graffito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffito.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CF979241B82ADB5005D87A7 /* GraffitoDrawPadApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraffitoDrawPadApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF979281B82ADB5005D87A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF979291B82ADB5005D87A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9CF9792B1B82ADB5005D87A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		9CF979251B82ADB5005D87A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9CF979241B82ADB5005D87A7 /* Graffito.app */,
+				9CF979241B82ADB5005D87A7 /* GraffitoDrawPadApp.app */,
 				9CF9793D1B82ADB5005D87A7 /* GraffitoDrawPadAppTests.xctest */,
 			);
 			name = Products;
@@ -192,7 +192,7 @@
 			);
 			name = GraffitoDrawPadApp;
 			productName = GraffitoDrawPadApp;
-			productReference = 9CF979241B82ADB5005D87A7 /* Graffito.app */;
+			productReference = 9CF979241B82ADB5005D87A7 /* GraffitoDrawPadApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9CF9793C1B82ADB5005D87A7 /* GraffitoDrawPadAppTests */ = {
@@ -416,8 +416,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GraffitoDrawPadApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Graffito;
+				PRODUCT_MODULE_NAME = GraffitoDrawPadApp;
+				PRODUCT_NAME = GraffitoDrawPadApp;
 			};
 			name = Debug;
 		};
@@ -427,8 +429,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GraffitoDrawPadApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Graffito;
+				PRODUCT_MODULE_NAME = GraffitoDrawPadApp;
+				PRODUCT_NAME = GraffitoDrawPadApp;
 			};
 			name = Release;
 		};
