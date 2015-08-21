@@ -24,16 +24,42 @@
 {
     [super viewDidLoad];
     
-    drawerView.brushColor = [UIColor blueColor];
-    drawerView.brushWidth = 6.0f;
+
+    [self determineLineColorAndWithSettings];
     self.canvasImageView.image = nil;
     
     [self setupTopNavBar];
     [self setupBottomToolBar];
     [self setupNotifications];
-
+    
 }
 
+//Checks the user defaults to determine the settings for a users brush color and width
+-(void) determineLineColorAndWithSettings
+{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"userColor"];
+    if (colorData == nil)
+    {
+        drawerView.lineColor = [UIColor blueColor];
+    }
+    else
+    {
+        UIColor *selectedColor = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+        drawerView.lineColor = selectedColor;
+    }
+    
+    CGFloat brushSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"userBrushSize"];
+    if (brushSize <= 0.1)
+    {
+        drawerView.lineWidth = 6.0f;
+    }
+    else
+    {
+        drawerView.lineWidth = brushSize;
+    }
+}
+
+//Configures the navigation bar for the view
 -(void) setupTopNavBar
 {
     UIBarButtonItem *cameraButton = [self createImageButtonItemWithNoTitle:@"CameraIcon" target:self action:@selector(cameraButtonPressed:)];
@@ -41,15 +67,23 @@
     
     UIBarButtonItem *shareButton = [self createImageButtonItemWithNoTitle:@"ShareIcon" target:self action:@selector(presentMenuFromNav:)];
     
-    UIBarButtonItem *playButton = [self createImageButtonItemWithNoTitle:@"PlayIcon" target:self action:@selector(playButtonPressed)];
+    UIBarButtonItem *colorDisplayButton = [self createColorDisplayButton:self action:@selector(colorButtonPressed)];
     
-    self.navbar.topItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton,playButton, nil] ;
+    self.navbar.topItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton,colorDisplayButton, nil] ;
+    
+    
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
+    image.contentMode = UIViewContentModeScaleAspectFit;
+    [image setImage: [UIImage imageNamed:@"GraffitoLogo"]];
+    
+    self.navbar.topItem.titleView = image;
 }
 
+//Configures the tool bar for the view
 -(void) setupBottomToolBar
 {
-    UIBarButtonItem *barButtonUndo = [self createImageButtonItemWithNoTitle:@"UndoIcon" target:drawerView action:@selector(undoDrawing)];
-    UIBarButtonItem *barButtonRedo = [self createImageButtonItemWithNoTitle:@"RedoIcon" target:drawerView action:@selector(redoDrawing)];
+    UIBarButtonItem *barButtonUndo = [self createImageButtonItemWithNoTitle:@"UndoIcon" target:self action:@selector(undoDrawing)];
+    UIBarButtonItem *barButtonRedo = [self createImageButtonItemWithNoTitle:@"RedoIcon" target:self action:@selector(redoDrawing)];
     UIBarButtonItem *barButtonTrash = [self createImageButtonItemWithNoTitle:@"TrashIcon" target:self action:@selector(trashButtonPressed)];
     UIBarButtonItem *barButtonErase = [self createImageButtonItemWithNoTitle:@"EraseIcon" target:self action:@selector(eraseButtonPressed)];
     UIBarButtonItem *barButtonBrush = [self createImageButtonItemWithNoTitle:@"BrushIcon" target:self action:@selector(brushButtonPressed)];
@@ -57,6 +91,7 @@
     toolbar.items = [NSArray arrayWithObjects:barButtonUndo,barButtonFlexibleGap,barButtonRedo, barButtonFlexibleGap, barButtonBrush, barButtonFlexibleGap, barButtonErase, barButtonFlexibleGap, barButtonTrash, nil];
 }
 
+//Register all notifications
 -(void) setupNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -73,8 +108,48 @@
                                              selector:@selector(sendToEmail)
                                                  name:@"Email"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateBrushColor)
+                                                 name:@"updateBrushColor"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateBrushSize)
+                                                 name:@"updateBrushSize"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setupTopNavBar)
+                                                 name:@"updateNavBar"
+                                               object:nil];
 }
 
+//Creates the color display button
+-(UIBarButtonItem *)createColorDisplayButton:(id)tgt action:(SEL)a
+{
+    UIButton *colorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect buttonFrame = [colorButton frame];
+    buttonFrame.size.width = 26;
+    buttonFrame.size.height = 26;
+    [colorButton setFrame:buttonFrame];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3, 26, 26)];
+    imageView.layer.cornerRadius = buttonFrame.size.width / 2;
+    imageView.layer.masksToBounds = YES;
+    imageView.layer.borderWidth = 2;
+    imageView.layer.borderColor = [[UIColor blackColor] CGColor];
+    [imageView setBackgroundColor:drawerView.lineColor];
+    [colorButton addSubview:imageView];
+    
+    [colorButton addTarget:tgt action:a forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:colorButton];
+    
+    return buttonItem;
+}
+
+//Creates a standard tool bar button
 -(UIBarButtonItem *)createImageButtonItemWithNoTitle:(NSString *)imagePath target:(id)tgt action:(SEL)a
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -102,6 +177,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Items for Share Menu
 - (NSArray *)menuItems
 {
     if (!_menuItems)
@@ -136,10 +212,12 @@
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library writeImageToSavedPhotosAlbum:image.CGImage orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error)
-    {
-        NSLog(@"%@",assetURL);
-        NSLog(@"%@",error);
-    }];
+     {
+         NSLog(@"%@",assetURL);
+         NSLog(@"%@",error);
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Image Saved!" message:@"Your image was successfully saved to the camera roll." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+         [alert show];
+     }];
 }
 
 
@@ -160,17 +238,42 @@
 
 -(void) eraseButtonPressed
 {
+    drawerView.drawTool = ACEDrawingToolTypeEraser;
+}
 
+-(void) undoDrawing
+{
+    [drawerView canUndo];
+    [drawerView undoLatestStep];
+}
+
+-(void) redoDrawing
+{
+    [drawerView canRedo];
+    [drawerView redoLatestStep];
 }
 
 -(void) playButtonPressed
 {
-     [drawerView animatePath];
+    //[drawerView animatePath];
+}
+
+-(void) colorButtonPressed
+{
+    drawerView.drawTool = ACEDrawingToolTypePen;
+    [self performSegueWithIdentifier:@"showBrushMenu" sender:self];
 }
 
 -(void) brushButtonPressed
 {
-    [self performSegueWithIdentifier:@"showBrushMenu" sender:self];
+    if (drawerView.drawTool == ACEDrawingToolTypeEraser)
+    {
+        drawerView.drawTool = ACEDrawingToolTypePen;
+    }
+    else
+    {
+       [self performSegueWithIdentifier:@"showBrushMenu" sender:self];
+    }
 }
 
 -(void) trashButtonPressed
@@ -185,9 +288,9 @@
     {
         if (self.canvasImageView.image)
         {
-             self.canvasImageView.image = nil;
+            self.canvasImageView.image = nil;
         }
-        [drawerView clearDrawing];
+        [drawerView clear];
     }
 }
 
@@ -256,6 +359,20 @@
     }
 }
 
+#pragma mark - BrushMenuViewControllerDelegate methods
+
+-(void) updateBrushColor
+{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"userColor"];
+    UIColor *selectedColor = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    drawerView.lineColor = selectedColor;
+}
+
+-(void) updateBrushSize
+{
+    drawerView.lineWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"userBrushSize"];
+}
+
 #pragma mark - UIImagePickerControllerDelegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -284,10 +401,11 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [drawerView refreshCurrentMode];
+    BrushMenuViewController* vc = [segue destinationViewController];
+    vc.currentSelectedColor = drawerView.lineColor;
+    vc.currentSelectedBrushSize = drawerView.lineWidth;
 }
 
 @end
-

@@ -8,37 +8,63 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger
-{
-    DrawPadPaintMode,
-    DrawPadEraseMode
-} DrawPadMode;
+#define ACEDrawingViewVersion   1.0.0
 
-@interface DrawPadUIView : UIView
-{
-    NSMutableArray *paths;
-    NSMutableArray *redoPaths;
-    UIBezierPath *bezPath;
-    CAShapeLayer *animateLayer;
-    BOOL isAnimating;
-    BOOL isDrawingExisting;
-}
+typedef enum {
+    ACEDrawingToolTypePen,
+    ACEDrawingToolTypeLine,
+    ACEDrawingToolTypeRectagleStroke,
+    ACEDrawingToolTypeRectagleFill,
+    ACEDrawingToolTypeEllipseStroke,
+    ACEDrawingToolTypeEllipseFill,
+    ACEDrawingToolTypeEraser,
+    ACEDrawingToolTypeText,
+    ACEDrawingToolTypeMultilineText
+} ACEDrawingToolType;
 
-@property (nonatomic) UIColor *brushColor;
-@property (nonatomic) CGFloat brushWidth;
-@property (nonatomic) BOOL canEdit;
-@property (nonatomic, readwrite) DrawPadMode padMode;
-@property (nonatomic, strong) UIColor *selectedColor;
+typedef NS_ENUM(NSUInteger, ACEDrawingMode) {
+    ACEDrawingModeScale,
+    ACEDrawingModeOriginalSize
+};
 
-- (void) refreshCurrentMode;
-- (void) drawPath:(CGPathRef)path;
-- (void) drawBezier:(UIBezierPath *)path;
-- (void) animatePath;
-- (void) clearDrawing;
-- (void) undoDrawing;
-- (void) redoDrawing;
-- (UIBezierPath *) bezierPathRepresentation;
+@protocol ACEDrawingViewDelegate, ACEDrawingTool;
+
+@interface DrawPadUIView : UIView<UITextViewDelegate>
+
+@property (nonatomic, assign) ACEDrawingToolType drawTool;
+@property (nonatomic, assign) id<ACEDrawingViewDelegate> delegate;
+
+// public properties
+@property (nonatomic, strong) UIColor *lineColor;
+@property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, assign) CGFloat lineAlpha;
+@property (nonatomic, assign) ACEDrawingMode drawMode;
+
+// get the current drawing
+@property (nonatomic, strong, readonly) UIImage *image;
+@property (nonatomic, strong) UIImage *backgroundImage;
+@property (nonatomic, readonly) NSUInteger undoSteps;
+
+// erase all
+- (void)clear;
+
+// undo / redo
+- (BOOL)canUndo;
+- (void)undoLatestStep;
+
+- (BOOL)canRedo;
+- (void)redoLatestStep;
 - (UIImage *)imageRepresentation: (UIImageView*) backgroundImage;
+
+@end
+
+#pragma mark -
+
+@protocol ACEDrawingViewDelegate <NSObject>
+
+@optional
+- (void)drawingView:(DrawPadUIView *)view willBeginDrawUsingTool:(id<ACEDrawingTool>)tool;
+- (void)drawingView:(DrawPadUIView *)view didEndDrawUsingTool:(id<ACEDrawingTool>)tool;
 
 @end
 

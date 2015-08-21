@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DrawPadUIView.h"
+#import "BrushMenuViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "RWDropdownMenu.h"
@@ -17,7 +18,7 @@
 @interface DrawPadViewController : UIViewController <UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (strong, nonatomic) IBOutlet DrawPadUIView *drawerView;
+@property (nonatomic, unsafe_unretained) IBOutlet DrawPadUIView *drawerView;
 @property (strong, nonatomic) IBOutlet UIImageView *canvasImageView;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navbar;
 @property (strong, nonatomic) UIColor *paintBrushColor;

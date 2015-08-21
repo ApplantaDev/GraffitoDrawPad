@@ -80,7 +80,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9m0-Yc-Ury">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9m0-Yc-Ury">
                                 <rect key="frame" x="0.0" y="-8" width="600" height="44"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textAttributes key="titleTextAttributes">
@@ -90,47 +90,197 @@
                                     <navigationItem title="Brush Menu" id="ETL-bT-l7k"/>
                                 </items>
                             </navigationBar>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-rn-xg7">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-rn-xg7" customClass="ASValueTrackingSlider">
                                 <rect key="frame" x="15" y="166" width="570" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.78823529410000004" green="0.18823529410000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.78823529410000004" green="0.18823529410000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="redSliderChanged:" destination="ePN-Sq-AbS" eventType="valueChanged" id="DJb-kL-hh8"/>
+                                </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jLU-jg-8Zb">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jLU-jg-8Zb" customClass="ASValueTrackingSlider">
                                 <rect key="frame" x="15" y="269" width="570" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.12690172699999988" green="0.6189536772973685" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.12690172699999999" green="0.61895367729999995" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="greenSliderChanged:" destination="ePN-Sq-AbS" eventType="valueChanged" id="2Y1-Bn-Hsw"/>
+                                </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2VN-EW-9VT">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2VN-EW-9VT" customClass="ASValueTrackingSlider">
                                 <rect key="frame" x="15" y="372" width="570" height="31"/>
+                                <color key="thumbTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="blueSliderChanged:" destination="ePN-Sq-AbS" eventType="valueChanged" id="Qrz-J6-xqT"/>
+                                </connections>
                             </slider>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oci-M5-BUd">
-                                <rect key="frame" x="253" y="551" width="94" height="29"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="E6v-wE-5Qo">
+                                <rect key="frame" x="15" y="540" width="570" height="31"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </stepper>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uwq-jm-RIJ">
-                                <rect key="frame" x="275" y="466" width="50" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                                <connections>
+                                    <action selector="brushSizeSliderChanged:" destination="ePN-Sq-AbS" eventType="valueChanged" id="OPs-Mk-ZJ8"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brush Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXf-Kd-ISY">
+                                <rect key="frame" x="517" y="571" width="83" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="83" id="jpK-lu-EZ4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luL-G9-APL">
+                                <rect key="frame" x="520" y="479" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="Epn-7E-XoQ"/>
+                                    <constraint firstAttribute="width" constant="64" id="nSo-au-g2Q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvK-7Y-gQa">
+                                <rect key="frame" x="0.0" y="41" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="p71-rS-JLg">
+                                        <button key="customView" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="azF-Rm-Ub4">
+                                            <rect key="frame" x="485" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="YZf-7b-K8s"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="L1Z-FV-7Bc"/>
+                                    <barButtonItem style="plain" id="cN3-LJ-1G7">
+                                        <button key="customView" opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UEa-bB-ZFn">
+                                            <rect key="frame" x="405" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="1" green="0.91470497532894501" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="YO0-0G-Xfd"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="W6p-fb-9PN"/>
+                                    <barButtonItem style="plain" id="G8d-gN-lwA">
+                                        <button key="customView" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DcZ-RS-T58">
+                                            <rect key="frame" x="325" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="1" green="0.67986023760000003" blue="0.023463199010000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="aLN-bF-pUb"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="SpH-vO-lpj"/>
+                                    <barButtonItem style="plain" id="tcO-er-R3o">
+                                        <button key="customView" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zxd-IV-QpM">
+                                            <rect key="frame" x="245" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.72815583880000001" green="0.18631068989999999" blue="0.25750411179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="OLZ-Fq-kHo"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="V5h-DK-C1k"/>
+                                    <barButtonItem style="plain" id="d2A-sC-2B6">
+                                        <button key="customView" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rcb-2h-t9p">
+                                            <rect key="frame" x="165" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.80748153700000003" blue="0.61117393090000005" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="3hH-4a-jlL"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rtM-JD-to6"/>
+                                    <barButtonItem style="plain" id="tYg-jB-G36">
+                                        <button key="customView" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7iu-K9-UVl">
+                                            <rect key="frame" x="85" y="46" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="colorButtonPressed:" destination="ePN-Sq-AbS" eventType="touchUpInside" id="aeg-6B-FQz"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="63U-ne-26L">
+                                <rect key="frame" x="17" y="441" width="218" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="218" id="gnx-dN-gZY"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="luL-G9-APL" firstAttribute="top" secondItem="2VN-EW-9VT" secondAttribute="bottom" constant="77" id="3Dy-NM-p9u"/>
                             <constraint firstItem="jLU-jg-8Zb" firstAttribute="trailing" secondItem="lIF-rn-xg7" secondAttribute="trailing" id="5Os-yA-lmP"/>
                             <constraint firstItem="2VN-EW-9VT" firstAttribute="leading" secondItem="jLU-jg-8Zb" secondAttribute="leading" id="8nk-Mm-JHj"/>
+                            <constraint firstItem="63U-ne-26L" firstAttribute="top" secondItem="2VN-EW-9VT" secondAttribute="bottom" constant="39" id="8wt-pd-SXN"/>
                             <constraint firstItem="2VN-EW-9VT" firstAttribute="top" secondItem="jLU-jg-8Zb" secondAttribute="bottom" constant="73" id="Ayi-vM-rKM"/>
                             <constraint firstItem="lIF-rn-xg7" firstAttribute="leading" secondItem="FpL-xf-6GW" secondAttribute="leadingMargin" constant="1" id="Dkz-xm-mW1"/>
                             <constraint firstItem="jLU-jg-8Zb" firstAttribute="leading" secondItem="lIF-rn-xg7" secondAttribute="leading" id="HZV-xl-Gag"/>
-                            <constraint firstItem="oci-M5-BUd" firstAttribute="centerX" secondItem="2VN-EW-9VT" secondAttribute="centerX" id="Iay-Ij-i8w"/>
+                            <constraint firstItem="63U-ne-26L" firstAttribute="leading" secondItem="FpL-xf-6GW" secondAttribute="leadingMargin" constant="1" id="IlP-mT-cnX"/>
                             <constraint firstItem="2VN-EW-9VT" firstAttribute="trailing" secondItem="jLU-jg-8Zb" secondAttribute="trailing" id="LYS-oV-T0z"/>
+                            <constraint firstItem="gvK-7Y-gQa" firstAttribute="top" secondItem="9m0-Yc-Ury" secondAttribute="bottom" constant="5" id="OCx-Ra-RR4"/>
                             <constraint firstItem="jLU-jg-8Zb" firstAttribute="top" secondItem="lIF-rn-xg7" secondAttribute="bottom" constant="73" id="PbH-9w-jlS"/>
+                            <constraint firstItem="9m0-Yc-Ury" firstAttribute="top" secondItem="FpL-xf-6GW" secondAttribute="topMargin" constant="-8" id="Rcs-On-UFP"/>
+                            <constraint firstItem="UWo-18-2C1" firstAttribute="top" secondItem="E6v-wE-5Qo" secondAttribute="bottom" constant="30" id="YAS-9P-X6v"/>
                             <constraint firstItem="UWo-18-2C1" firstAttribute="top" secondItem="lIF-rn-xg7" secondAttribute="bottom" constant="404" id="YGc-iM-UEz"/>
                             <constraint firstItem="lIF-rn-xg7" firstAttribute="centerX" secondItem="9m0-Yc-Ury" secondAttribute="centerX" id="ZPt-fY-cmo"/>
-                            <constraint firstAttribute="bottom" secondItem="oci-M5-BUd" secondAttribute="bottom" constant="20" symbolic="YES" id="Zue-Oe-QNj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="luL-G9-APL" secondAttribute="trailing" id="hW7-Q7-AkE"/>
+                            <constraint firstItem="fXf-Kd-ISY" firstAttribute="trailing" secondItem="9m0-Yc-Ury" secondAttribute="trailing" id="icj-wZ-y8t"/>
+                            <constraint firstItem="UWo-18-2C1" firstAttribute="top" secondItem="fXf-Kd-ISY" secondAttribute="bottom" constant="8" symbolic="YES" id="kaA-oT-jfm"/>
+                            <constraint firstItem="gvK-7Y-gQa" firstAttribute="leading" secondItem="9m0-Yc-Ury" secondAttribute="leading" id="kvl-jM-mo4"/>
+                            <constraint firstItem="fXf-Kd-ISY" firstAttribute="top" secondItem="E6v-wE-5Qo" secondAttribute="bottom" constant="1" id="m0b-UU-W97"/>
+                            <constraint firstItem="E6v-wE-5Qo" firstAttribute="trailing" secondItem="2VN-EW-9VT" secondAttribute="trailing" id="muJ-ax-ULd"/>
+                            <constraint firstItem="E6v-wE-5Qo" firstAttribute="top" secondItem="63U-ne-26L" secondAttribute="bottom" constant="34" id="o2i-Ii-qE4"/>
                             <constraint firstItem="9m0-Yc-Ury" firstAttribute="leading" secondItem="FpL-xf-6GW" secondAttribute="leadingMargin" constant="-16" id="o5J-j4-VMf"/>
+                            <constraint firstItem="E6v-wE-5Qo" firstAttribute="leading" secondItem="2VN-EW-9VT" secondAttribute="leading" id="p76-7u-oCb"/>
+                            <constraint firstItem="gvK-7Y-gQa" firstAttribute="trailing" secondItem="9m0-Yc-Ury" secondAttribute="trailing" id="sBL-sI-mmr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9m0-Yc-Ury" secondAttribute="trailing" constant="-16" id="sOB-2j-j5U"/>
                             <constraint firstAttribute="centerX" secondItem="9m0-Yc-Ury" secondAttribute="centerX" id="y5L-A7-ctR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="AWf-Ni-D6c"/>
                     <connections>
+                        <outlet property="blackButton" destination="azF-Rm-Ub4" id="ooH-SU-3wX"/>
+                        <outlet property="blueButton" destination="7iu-K9-UVl" id="Prd-Te-u4l"/>
+                        <outlet property="blueSlider" destination="2VN-EW-9VT" id="Yg0-KS-bIO"/>
+                        <outlet property="brushSizeLabel" destination="luL-G9-APL" id="Sjh-sX-02n"/>
+                        <outlet property="brushSizeSlider" destination="E6v-wE-5Qo" id="zDA-oA-fZo"/>
+                        <outlet property="colorImageView" destination="63U-ne-26L" id="oQp-XW-EI2"/>
+                        <outlet property="greenButton" destination="Rcb-2h-t9p" id="ien-Uf-Wwe"/>
+                        <outlet property="greenSlider" destination="jLU-jg-8Zb" id="OJK-bP-ipQ"/>
                         <outlet property="navBar" destination="9m0-Yc-Ury" id="tLd-Ud-pY4"/>
+                        <outlet property="orangeButton" destination="DcZ-RS-T58" id="Z8i-ZF-cZA"/>
+                        <outlet property="redButton" destination="zxd-IV-QpM" id="fQV-XS-wvp"/>
+                        <outlet property="redSlider" destination="lIF-rn-xg7" id="feT-yp-6Fy"/>
+                        <outlet property="yellowButton" destination="UEa-bB-ZFn" id="stl-Mo-dzD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zik-QD-B91" userLabel="First Responder" sceneMemberID="firstResponder"/>

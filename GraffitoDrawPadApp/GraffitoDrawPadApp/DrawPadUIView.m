@@ -7,17 +7,39 @@
 //
 
 #import "DrawPadUIView.h"
+#import "GraffitoGadgets.h"
+
+#import <QuartzCore/QuartzCore.h>
+
+#define kDefaultLineColor       [UIColor blackColor]
+#define kDefaultLineWidth       10.0f;
+#define kDefaultLineAlpha       1.0f
+#define PARTIAL_REDRAW          0
+#define IOS8_OR_ABOVE [[[UIDevice currentDevice] systemVersion] integerValue] >= 8.0
+
+@interface DrawPadUIView () {
+    CGPoint currentPoint;
+    CGPoint previousPoint1;
+    CGPoint previousPoint2;
+}
+
+@property (nonatomic, strong) NSMutableArray *pathArray;
+@property (nonatomic, strong) NSMutableArray *bufferArray;
+@property (nonatomic, strong) id<ACEDrawingTool> currentTool;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, assign) CGFloat originalFrameYPos;
+@end
+
+#pragma mark -
 
 @implementation DrawPadUIView
-
-#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-        [self setupDrawPad];
+        [self configure];
     }
     return self;
 }
@@ -25,120 +47,31 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
-        [self setupDrawPad];
+    if (self) {
+        [self configure];
     }
     return self;
 }
 
-#pragma mark - UI Configuration
-
-- (void)setupDrawPad
+- (void)configure
 {
-    paths = [NSMutableArray new];
-    redoPaths =  [NSMutableArray new];
-    _canEdit = YES;
-}
-
-- (void)setBrushColor:(UIColor *)brushColor
-{
-    _brushColor = brushColor;
-}
-
-#pragma mark - View Drawing
-
-- (void)drawRect:(CGRect)rect
-{
-    if (!isAnimating)
-    {
-        [_brushColor setStroke];
-        if (!isDrawingExisting)
-        {
-            for (UIBezierPath *path in paths)
-            {
-                [path strokeWithBlendMode:kCGBlendModeNormal alpha:1.0];
-            }
-        }
-        else
-        {
-            [bezPath strokeWithBlendMode:kCGBlendModeNormal alpha:1.0];
-        }
-    }
-}
-- (void)drawPath:(CGPathRef)path
-{
-    isDrawingExisting = YES;
-    _canEdit = NO;
-    bezPath = [UIBezierPath new];
-    bezPath.CGPath = path;
-    bezPath.lineCapStyle = kCGLineCapRound;
-    bezPath.lineWidth = _brushWidth;
-    bezPath.miterLimit = 0.0f;
+    // init the private arrays
+    self.pathArray = [NSMutableArray array];
+    self.bufferArray = [NSMutableArray array];
     
-    // If iPad apply the scale first so the paths bounds is in its final state.
-    if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].location != NSNotFound)
-    {
-        [bezPath setLineWidth:_brushWidth];
-        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(2, 2);
-        [bezPath applyTransform:scaleTransform];
-    }
+    // set the default values for the public properties
+    self.lineColor = kDefaultLineColor;
+    self.lineWidth = kDefaultLineWidth;
+    self.lineAlpha = kDefaultLineAlpha;
     
-    // Center the drawing within the view.
-    CGRect charBounds = bezPath.bounds;
-    CGFloat charX = CGRectGetMidX(charBounds);
-    CGFloat charY = CGRectGetMidY(charBounds);
-    CGRect cellBounds = self.bounds;
-    CGFloat centerX = CGRectGetMidX(cellBounds);
-    CGFloat centerY = CGRectGetMidY(cellBounds);
+    self.drawMode = ACEDrawingModeOriginalSize;
     
-    [bezPath applyTransform:CGAffineTransformMakeTranslation(centerX-charX, centerY-charY)];
+    // set the transparent background
+    self.backgroundColor = [UIColor clearColor];
     
-    [self setNeedsDisplay];
-}
-- (void)drawBezier:(UIBezierPath *)path
-{
-    [self drawPath:path.CGPath];
+    self.originalFrameYPos = self.frame.origin.y;
 }
 
-- (void) undoDrawing
-{
-    if([paths count] > 0){
-         [redoPaths addObject:[paths lastObject]];
-    }
-    [paths removeLastObject];
-    
-    [self setNeedsDisplay];
-}
-
-- (void) redoDrawing
-{
-    if ([redoPaths count] > 0) {
-        [paths addObject: [redoPaths lastObject]];
-    }
-    [redoPaths removeLastObject];
-    [self setNeedsDisplay];
-}
-
-- (void)setMode:(DrawPadMode)mode{
-    
-    _padMode = mode;
-    [self setNeedsDisplay];
-}
-
-- (void)refreshCurrentMode
-{
-    [self setMode:_padMode];
-}
-
-- (void)clearDrawing
-{
-    bezPath = nil;
-    paths = nil;
-    redoPaths = nil;
-    [self setNeedsDisplay];
-    [self setupDrawPad];
-}
 #pragma mark - View Draw Reading
 - (UIImage *)imageRepresentation: (UIImageView*) backgroundImage
 {
@@ -153,104 +86,246 @@
     return viewImage;
 }
 
-- (UIBezierPath *)bezierPathRepresentation
+#pragma mark - Drawing
+
+- (void)drawRect:(CGRect)rect
 {
-    UIBezierPath *singleBezPath = [UIBezierPath new];
-    if (paths.count > 0)
-    {
-        for (UIBezierPath *path in paths)
-        {
-            [singleBezPath appendPath:path];
+#if PARTIAL_REDRAW
+    // TODO: draw only the updated part of the image
+    [self drawPath];
+#else
+    switch (self.drawMode) {
+        case ACEDrawingModeOriginalSize:
+            [self.image drawAtPoint:CGPointZero];
+            break;
+            
+        case ACEDrawingModeScale:
+            [self.image drawInRect:self.bounds];
+            break;
+    }
+    [self.currentTool draw];
+#endif
+}
+
+- (void)updateCacheImage:(BOOL)redraw
+{
+    // init a context
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    
+    if (redraw) {
+        // erase the previous image
+        self.image = nil;
+        
+        // load previous image (if returning to screen)
+        
+        switch (self.drawMode) {
+            case ACEDrawingModeOriginalSize:
+                [[self.backgroundImage copy] drawAtPoint:CGPointZero];
+                break;
+            case ACEDrawingModeScale:
+                [[self.backgroundImage copy] drawInRect:self.bounds];
+                break;
         }
+        
+        // I need to redraw all the lines
+        for (id<ACEDrawingTool> tool in self.pathArray) {
+            [tool draw];
+        }
+        
+    } else {
+        // set the draw point
+        [self.image drawAtPoint:CGPointZero];
+        [self.currentTool draw];
+    }
+    
+    // store the image
+    self.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+}
+
+- (void)finishDrawing
+{
+    // update the image
+    [self updateCacheImage:NO];
+    
+    // clear the redo queue
+    [self.bufferArray removeAllObjects];
+    
+    // call the delegate
+    if ([self.delegate respondsToSelector:@selector(drawingView:didEndDrawUsingTool:)]) {
+        [self.delegate drawingView:self didEndDrawUsingTool:self.currentTool];
+    }
+    
+    // clear the current tool
+    self.currentTool = nil;
+}
+
+
+- (id<ACEDrawingTool>)toolWithCurrentSettings
+{
+    if (self.drawTool == ACEDrawingToolTypePen)
+    {
+        return ACE_AUTORELEASE([ACEDrawingPenTool new]);
     }
     else
     {
-        singleBezPath = bezPath;
+        return ACE_AUTORELEASE([ACEDrawingEraserTool new]);
     }
-    return singleBezPath;
 }
 
-#pragma mark - Animation
 
-- (void)animatePath
-{
-    UIBezierPath *animatingPath = [UIBezierPath new];
-    if (_canEdit)
-    {
-        for (UIBezierPath *path in paths)
-        {
-            [animatingPath appendPath:path];
-        }
-    }
-    else
-    {
-        animatingPath = bezPath;
-    }
-    
-    // Clear out the existing view.
-    isAnimating = YES;
-    [self setNeedsDisplay];
-    
-    // Create shape layer that stores the path.
-    animateLayer = [[CAShapeLayer alloc] init];
-    animateLayer.fillColor = nil;
-    animateLayer.path = animatingPath.CGPath;
-    animateLayer.strokeColor = [_brushColor CGColor];
-    animateLayer.lineWidth = _brushWidth;
-    animateLayer.miterLimit = 0.0f;
-    animateLayer.lineCap = @"round";
-    
-    // Create animation of path of the stroke end.
-    CABasicAnimation *animation = [[CABasicAnimation alloc] init];
-    animation.duration = 3.0;
-    animation.fromValue = @(0.0f);
-    animation.toValue = @(1.0f);
-    animation.delegate = self;
-    [animateLayer addAnimation:animation forKey:@"strokeEnd"];
-    [self.layer addSublayer:animateLayer];
-}
+#pragma mark - Touch Methods
 
-#pragma mark - Animation Delegate
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    isAnimating = NO;
-    [animateLayer removeFromSuperlayer];
-    animateLayer = nil;
-    [self setNeedsDisplay];
-}
-
-#pragma mark - Touch Detecting
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_canEdit)
-    {
-        bezPath = [[UIBezierPath alloc] init];
-        [bezPath setLineCapStyle:kCGLineCapRound];
-        [bezPath setLineWidth:_brushWidth];
-        [bezPath setMiterLimit:0];
-        
-        UITouch *currentTouch = [[touches allObjects] objectAtIndex:0];
-        [bezPath moveToPoint:[currentTouch locationInView:self]];
-        [paths addObject:bezPath];
+    // add the first touch
+    UITouch *touch = [touches anyObject];
+    previousPoint1 = [touch previousLocationInView:self];
+    currentPoint = [touch locationInView:self];
+    
+    // init the bezier path
+    self.currentTool = [self toolWithCurrentSettings];
+    self.currentTool.lineWidth = self.lineWidth;
+    self.currentTool.lineColor = self.lineColor;
+    self.currentTool.lineAlpha = self.lineAlpha;
+    
+    [self.pathArray addObject:self.currentTool];
+    
+    [self.currentTool setInitialPoint:currentPoint];
+    
+    // call the delegate
+    if ([self.delegate respondsToSelector:@selector(drawingView:willBeginDrawUsingTool:)]) {
+        [self.delegate drawingView:self willBeginDrawUsingTool:self.currentTool];
     }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_canEdit)
-    {
-        UITouch *movedTouch = [[touches allObjects] objectAtIndex:0];
-        [bezPath addLineToPoint:[movedTouch locationInView:self]];
+    // save all the touches in the path
+    UITouch *touch = [touches anyObject];
+    
+    previousPoint2 = previousPoint1;
+    previousPoint1 = [touch previousLocationInView:self];
+    currentPoint = [touch locationInView:self];
+    
+    if ([self.currentTool isKindOfClass:[ACEDrawingPenTool class]]) {
+        CGRect bounds = [(ACEDrawingPenTool*)self.currentTool addPathPreviousPreviousPoint:previousPoint2 withPreviousPoint:previousPoint1 withCurrentPoint:currentPoint];
+        
+        CGRect drawBox = bounds;
+        drawBox.origin.x -= self.lineWidth * 2.0;
+        drawBox.origin.y -= self.lineWidth * 2.0;
+        drawBox.size.width += self.lineWidth * 4.0;
+        drawBox.size.height += self.lineWidth * 4.0;
+        
+        [self setNeedsDisplayInRect:drawBox];
+    }
+    else {
+        [self.currentTool moveFromPoint:previousPoint1 toPoint:currentPoint];
         [self setNeedsDisplay];
     }
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-  
+    // make sure a point is recorded
+    [self touchesMoved:touches withEvent:event];
+    [self finishDrawing];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // make sure a point is recorded
+    [self touchesEnded:touches withEvent:event];
+}
+
+
+- (CGRect)adjustFrameToFitWithinDrawingBounds: (CGRect)frame {
+    
+    //check that the frame does not go beyond bounds of parent view
+    if ((frame.origin.x + frame.size.width) > self.frame.size.width) {
+        frame.size.width = self.frame.size.width - frame.origin.x;
+    }
+    if ((frame.origin.y + frame.size.height) > self.frame.size.height) {
+        frame.size.height = self.frame.size.height - frame.origin.y;
+    }
+    return frame;
+}
+
+
+- (void)resetTool
+{
+    self.currentTool = nil;
+}
+
+#pragma mark - Actions
+
+//Clear the canvas
+- (void)clear
+{
+    [self resetTool];
+    [self.bufferArray removeAllObjects];
+    [self.pathArray removeAllObjects];
+    self.backgroundImage = nil;
+    [self updateCacheImage:YES];
+    [self setNeedsDisplay];
+}
+
+
+#pragma mark - Undo / Redo
+
+- (NSUInteger)undoSteps
+{
+    return self.bufferArray.count;
+}
+
+- (BOOL)canUndo
+{
+    return self.pathArray.count > 0;
+}
+
+- (void)undoLatestStep
+{
+    if ([self canUndo]) {
+        [self resetTool];
+        id<ACEDrawingTool>tool = [self.pathArray lastObject];
+        [self.bufferArray addObject:tool];
+        [self.pathArray removeLastObject];
+        [self updateCacheImage:YES];
+        [self setNeedsDisplay];
+    }
+}
+
+- (BOOL)canRedo
+{
+    return self.bufferArray.count > 0;
+}
+
+- (void)redoLatestStep
+{
+    if ([self canRedo]) {
+        [self resetTool];
+        id<ACEDrawingTool>tool = [self.bufferArray lastObject];
+        [self.pathArray addObject:tool];
+        [self.bufferArray removeLastObject];
+        [self updateCacheImage:YES];
+        [self setNeedsDisplay];
+    }
+}
+
+
+- (void)dealloc
+{
+    self.pathArray = nil;
+    self.bufferArray = nil;
+    self.currentTool = nil;
+    self.image = nil;
+    self.backgroundImage = nil;
+    
+#if !ACE_HAS_ARC
+    
+    [super dealloc];
+#endif
+}
 
 
 @end
