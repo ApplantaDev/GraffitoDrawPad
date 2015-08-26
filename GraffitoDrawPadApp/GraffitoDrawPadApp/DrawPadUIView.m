@@ -75,7 +75,8 @@
 #pragma mark - View Draw Reading
 - (UIImage *)imageRepresentation: (UIImageView*) backgroundImage
 {
-    UIGraphicsBeginImageContext(self.bounds.size);
+    //Get high quality image
+   UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     if (backgroundImage != nil) {
         [backgroundImage.layer renderInContext:context];
@@ -83,6 +84,7 @@
     [self.layer renderInContext:context];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
     return viewImage;
 }
 

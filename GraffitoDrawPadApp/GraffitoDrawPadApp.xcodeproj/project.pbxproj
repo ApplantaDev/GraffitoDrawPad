@@ -11,6 +11,7 @@
 		9C181D961B85835500713A11 /* ASValuePopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C181D931B85835500713A11 /* ASValuePopUpView.m */; };
 		9C181D971B85835500713A11 /* ASValueTrackingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C181D951B85835500713A11 /* ASValueTrackingSlider.m */; };
 		9C181D9D1B86A82100713A11 /* GraffitoGadgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C181D9C1B86A82100713A11 /* GraffitoGadgets.m */; };
+		9C181DA71B8D849B00713A11 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C181DA51B8D849B00713A11 /* ProgressHUD.m */; };
 		9CF9792A1B82ADB5005D87A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF979291B82ADB5005D87A7 /* main.m */; };
 		9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9792C1B82ADB5005D87A7 /* AppDelegate.m */; };
 		9CF979331B82ADB5005D87A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF979311B82ADB5005D87A7 /* Main.storyboard */; };
@@ -43,6 +44,8 @@
 		9C181D951B85835500713A11 /* ASValueTrackingSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValueTrackingSlider.m; sourceTree = "<group>"; };
 		9C181D9B1B86A82100713A11 /* GraffitoGadgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraffitoGadgets.h; sourceTree = "<group>"; };
 		9C181D9C1B86A82100713A11 /* GraffitoGadgets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraffitoGadgets.m; sourceTree = "<group>"; };
+		9C181DA41B8D849B00713A11 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		9C181DA51B8D849B00713A11 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		9CF979241B82ADB5005D87A7 /* GraffitoDrawPadApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraffitoDrawPadApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF979281B82ADB5005D87A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF979291B82ADB5005D87A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -95,6 +98,15 @@
 			path = ASValueTrackingSlider;
 			sourceTree = "<group>";
 		};
+		9C181DA21B8D849B00713A11 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				9C181DA41B8D849B00713A11 /* ProgressHUD.h */,
+				9C181DA51B8D849B00713A11 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
+			sourceTree = "<group>";
+		};
 		9CF9791B1B82ADB5005D87A7 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +128,7 @@
 		9CF979261B82ADB5005D87A7 /* GraffitoDrawPadApp */ = {
 			isa = PBXGroup;
 			children = (
+				9C181DA21B8D849B00713A11 /* ProgressHUD */,
 				9C181D911B85835500713A11 /* ASValueTrackingSlider */,
 				9CF979531B842519005D87A7 /* RWDropdownMenu */,
 				9CF9792B1B82ADB5005D87A7 /* AppDelegate.h */,
@@ -224,7 +237,6 @@
 				TargetAttributes = {
 					9CF979231B82ADB5005D87A7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 3LVCDBLJR5;
 					};
 					9CF9793C1B82ADB5005D87A7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -282,6 +294,7 @@
 				9CF9792D1B82ADB5005D87A7 /* AppDelegate.m in Sources */,
 				9C181D901B855A0200713A11 /* BrushMenuViewController.m in Sources */,
 				9CF979521B82BAD5005D87A7 /* DrawPadUIView.m in Sources */,
+				9C181DA71B8D849B00713A11 /* ProgressHUD.m in Sources */,
 				9C181D9D1B86A82100713A11 /* GraffitoGadgets.m in Sources */,
 				9CF9795B1B842519005D87A7 /* RWDropdownMenuCell.m in Sources */,
 				9C181D971B85835500713A11 /* ASValueTrackingSlider.m in Sources */,

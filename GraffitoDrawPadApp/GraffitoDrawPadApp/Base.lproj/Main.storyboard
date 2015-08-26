@@ -17,13 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CLR-1d-kb6">
-                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RiR-2E-PWI" customClass="DrawPadUIView">
-                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDh-d5-siD">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,26 +32,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CLR-1d-kb6" firstAttribute="leading" secondItem="RiR-2E-PWI" secondAttribute="leading" id="7el-2v-wR5"/>
-                            <constraint firstItem="Krv-kJ-32b" firstAttribute="trailing" secondItem="RiR-2E-PWI" secondAttribute="trailing" id="9c3-7h-seb"/>
-                            <constraint firstItem="sDh-d5-siD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="BkY-I5-IdL"/>
-                            <constraint firstItem="RiR-2E-PWI" firstAttribute="top" secondItem="sDh-d5-siD" secondAttribute="bottom" id="CNn-4m-6mp"/>
-                            <constraint firstItem="sDh-d5-siD" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="CeX-v9-G3l"/>
-                            <constraint firstItem="RiR-2E-PWI" firstAttribute="leading" secondItem="sDh-d5-siD" secondAttribute="leading" id="CsI-6q-gnX"/>
-                            <constraint firstItem="Krv-kJ-32b" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Hso-ZZ-iIr"/>
-                            <constraint firstItem="Krv-kJ-32b" firstAttribute="top" secondItem="RiR-2E-PWI" secondAttribute="bottom" id="IQu-L2-MKe"/>
-                            <constraint firstAttribute="trailing" secondItem="sDh-d5-siD" secondAttribute="trailing" id="M6H-d5-UnR"/>
-                            <constraint firstItem="CLR-1d-kb6" firstAttribute="trailing" secondItem="RiR-2E-PWI" secondAttribute="trailing" id="dkM-Sd-boM"/>
-                            <constraint firstItem="CLR-1d-kb6" firstAttribute="top" secondItem="RiR-2E-PWI" secondAttribute="top" id="fEz-as-9PE"/>
-                            <constraint firstItem="RiR-2E-PWI" firstAttribute="trailing" secondItem="sDh-d5-siD" secondAttribute="trailing" id="iRd-io-GfD"/>
-                            <constraint firstItem="Krv-kJ-32b" firstAttribute="leading" secondItem="RiR-2E-PWI" secondAttribute="leading" id="y9E-QE-fom"/>
-                            <constraint firstItem="CLR-1d-kb6" firstAttribute="bottom" secondItem="Krv-kJ-32b" secondAttribute="top" id="yM9-r8-DiI"/>
+                            <constraint firstAttribute="trailing" secondItem="sDh-d5-siD" secondAttribute="trailing" id="8X9-Na-QJD"/>
+                            <constraint firstItem="sDh-d5-siD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="BdB-SP-o46"/>
+                            <constraint firstItem="sDh-d5-siD" firstAttribute="leading" secondItem="Krv-kJ-32b" secondAttribute="leading" id="QMM-M2-nDX"/>
+                            <constraint firstItem="Krv-kJ-32b" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Qez-8g-THP"/>
+                            <constraint firstItem="sDh-d5-siD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="XZF-bZ-En0"/>
+                            <constraint firstItem="sDh-d5-siD" firstAttribute="trailing" secondItem="Krv-kJ-32b" secondAttribute="trailing" id="xsf-sC-bBq"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="canvasImageView" destination="CLR-1d-kb6" id="405-bd-hU2"/>
-                        <outlet property="drawerView" destination="RiR-2E-PWI" id="7sC-Hh-JA5"/>
                         <outlet property="navbar" destination="sDh-d5-siD" id="XOx-pt-yqh"/>
                         <outlet property="toolbar" destination="Krv-kJ-32b" id="Hdl-Fh-1Bm"/>
                         <segue destination="ePN-Sq-AbS" kind="presentation" identifier="showBrushMenu" id="KIJ-A8-HeC"/>
