@@ -78,8 +78,13 @@
     //Get high quality image
    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    if (backgroundImage != nil) {
+    if (backgroundImage != nil)
+    {
         [backgroundImage.layer renderInContext:context];
+    }
+    else
+    {
+        self.backgroundColor = [UIColor whiteColor];
     }
     [self.layer renderInContext:context];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
