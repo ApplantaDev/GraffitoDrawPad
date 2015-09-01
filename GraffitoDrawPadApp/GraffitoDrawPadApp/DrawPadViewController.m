@@ -24,10 +24,9 @@
 {
     [super viewDidLoad];
     
+    //Initial view setup
     [self setupDrawPadView];
     [self determineLineColorAndWithSettings];
-    self.canvasImageView.image = nil;
-    
     [self setupTopNavBar];
     [self setupBottomToolBar];
     [self setupNotifications];
@@ -35,10 +34,10 @@
 
 -(void) setupDrawPadView
 {
-    //Initialize the draw pad view
     drawerView = [[DrawPadUIView alloc] init];
     drawerView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-88); //Subtract the top and bottom toolbar sizes
     drawerView.center = self.view.center;
+    
     [self.view addSubview:drawerView];
 }
 
@@ -78,7 +77,6 @@
     UIBarButtonItem *colorDisplayButton = [self createColorDisplayButton:self action:@selector(colorButtonPressed)];
     
     self.navbar.topItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton,colorDisplayButton, nil] ;
-    
     
     UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
     image.contentMode = UIViewContentModeScaleAspectFit;
@@ -169,7 +167,6 @@
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3, 26, 26)];
     imageView.image = [UIImage imageNamed:imageNormal];
-    //[button addSubview:imageView];
     [button setBackgroundImage:imageView.image forState:UIControlStateNormal];
     
     UIImageView *imageViewTouched = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3, 26, 26)];
@@ -268,11 +265,6 @@
     [drawerView redoLatestStep];
 }
 
--(void) playButtonPressed
-{
-    //[drawerView animatePath];
-}
-
 -(void) colorButtonPressed
 {
     drawerView.drawTool = ACEDrawingToolTypePen;
@@ -303,14 +295,20 @@
 {
     if(buttonIndex == 1)
     {
-        if (self.imageView.image)
-        {
-            self.imageView.image = nil;
-        }
-        [drawerView clear];
-        [self setupDrawPadView];
-        [self determineLineColorAndWithSettings];
+        [self clearDrawPad];
     }
+}
+
+
+-(void) clearDrawPad
+{
+    if (self.imageView.image)
+    {
+        self.imageView.image = nil;
+    }
+    [drawerView clear];
+    [self setupDrawPadView];
+    [self determineLineColorAndWithSettings];
 }
 
 #pragma mark - EmailComposerDelegate methods
@@ -413,6 +411,13 @@
         }
     }
     
+    //Erase the current image before loading a new one
+    [drawerView clear];
+    if (self.imageView.image)
+    {
+        self.imageView.image = nil;
+    }
+    
     //Need to resize image view based on the size of the image imported
     self.imageView = [[UIImageView alloc] init];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -435,17 +440,18 @@
     self.imageView.frame = newWindowFrame;
     self.imageView.center = self.view.center;
     
-    //Change the frame of the draw pad view to be identical to the image loaded
     //Adjust the new draw pad frame size differently for a screenshot
     if (apectRatio < 0.6) {
         NSLog(@"ScreenSHot");
         newHeight = newHeight-38;
     }
-    self.drawerView.frame= CGRectMake(0,0,newWidth, newHeight);
-    self.drawerView.center = self.imageView.center;
+    
+    //Change the frame of the draw pad view to be identical to the image loaded
+    drawerView.frame= CGRectMake(0,0,newWidth, newHeight);
+    drawerView.center = self.imageView.center;
     
     [self.view addSubview:self.imageView];
-    [self.view addSubview:self.drawerView];
+    [self.view addSubview:drawerView];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

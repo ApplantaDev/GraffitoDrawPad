@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9CF979231B82ADB5005D87A7"
-               BuildableName = "GraffitoDrawPadApp.app"
+               BuildableName = "Graffito.app"
                BlueprintName = "GraffitoDrawPadApp"
                ReferencedContainer = "container:GraffitoDrawPadApp.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CF979231B82ADB5005D87A7"
-            BuildableName = "GraffitoDrawPadApp.app"
+            BuildableName = "Graffito.app"
             BlueprintName = "GraffitoDrawPadApp"
             ReferencedContainer = "container:GraffitoDrawPadApp.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CF979231B82ADB5005D87A7"
-            BuildableName = "GraffitoDrawPadApp.app"
+            BuildableName = "Graffito.app"
             BlueprintName = "GraffitoDrawPadApp"
             ReferencedContainer = "container:GraffitoDrawPadApp.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CF979231B82ADB5005D87A7"
-            BuildableName = "GraffitoDrawPadApp.app"
+            BuildableName = "Graffito.app"
             BlueprintName = "GraffitoDrawPadApp"
             ReferencedContainer = "container:GraffitoDrawPadApp.xcodeproj">
          </BuildableReference>

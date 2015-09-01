@@ -20,14 +20,11 @@
 @interface DrawPadViewController : UIViewController <UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
-//@property (nonatomic, unsafe_unretained) IBOutlet DrawPadUIView *drawerView;
-@property (strong, nonatomic) IBOutlet UIImageView *canvasImageView;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navbar;
 @property (strong, nonatomic) UIColor *paintBrushColor;
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @property (nonatomic, strong) DrawPadUIView *drawerView;
 @property (nonatomic,strong) UIImageView *imageView;
-@property (strong, nonatomic) IBOutlet UIView *screenUIView;
 
 @end
